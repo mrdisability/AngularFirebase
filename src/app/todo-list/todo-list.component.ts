@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
+import { EditTodoComponent } from '../edit-todo/edit-todo.component';
 import { Todo } from '../models/todo.model';
 import { TodoService } from '../todo.service';
 
@@ -10,8 +12,33 @@ import { TodoService } from '../todo.service';
 })
 export class TodoListComponent implements OnInit {
 
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
+  todos: Todo[] = [];
+
+  constructor(
+    private todoService: TodoService,
+    private modal: NgbModal) { }
+
+  ngOnInit() {
+    this.todoService.getTodos().subscribe((res: Todo[]) => {
+      this.todos = res;
+    })
+  }
+
+  editModal(todo: Todo) {
+    const modalRef = this.modal.open(EditTodoComponent, {
+      size: 'lg',
+      centered: true,
+      windowClass: 'dark-modal',
+    });
+
+    modalRef.componentInstance.id = todo.id;
+  }
+
+  deleteTodo(todo: Todo) {
+    if (confirm('Are you sure to delete this todo?') == true) {
+      this.todoService.deleteTodo(todo).then(() =>
+       console.log('delete successful'));
+    }
   }
 
 }

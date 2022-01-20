@@ -1,15 +1,56 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Subject, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { Todo } from './models/todo.model';
 import { map } from "rxjs/operators";
+import {
+  Firestore, addDoc, collection, collectionData,
+  doc, docData, deleteDoc, updateDoc, DocumentReference, setDoc, serverTimestamp
+} from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
 
+  constructor(private firestore: Firestore) { }
 
+  addTodo(todo: any) {
+    const todosRef = collection(this.firestore, 'todos');
+
+    const newTodo = {
+      todo: todo,
+      completed: false,
+      created: serverTimestamp()
+    };
+
+    return addDoc(todosRef, newTodo);
+  }
+
+  getTodos(): Observable<Todo[]> {
+    const todosRef = collection(this.firestore, 'todos');
+    return collectionData(todosRef, { idField: 'id' }) as Observable<Todo[]>;
+  }
+
+  deleteTodo(todo: Todo) {
+    const todoDocRef = doc(this.firestore, `todos/${todo.id}`);
+    return deleteDoc(todoDocRef);
+  }
+
+  getTodoByID(id: string) {
+    const todoRef = doc(this.firestore, `todos/${id}`);
+    return docData(todoRef, { idField: 'id' }) as Observable<Todo>;
+  }
+
+  updateTodo(todo: Todo) {
+    const todoDocRef = doc(this.firestore, `todos/${todo.id}`);
+    return setDoc(todoDocRef, todo);
+  }
+
+  modifyTodoCompleted(todo: Todo, completed: boolean) {
+    const todoDocRef = doc(this.firestore, `todos/${todo.id}`);
+    return updateDoc(todoDocRef, { completed: completed });
+  }
 
 }
 

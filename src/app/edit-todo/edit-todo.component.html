@@ -1,0 +1,24 @@
+<div *ngIf="todo" class="container" style="padding: 20px;">
+  <h4>Edit todo record</h4>
+  <form #todoForm="ngForm" (ngSubmit)="onUpdate()">
+    <div class="form-group">
+      <label>Todo</label>
+      <input class="form-control" name="todo" #todoCtrl="ngModel"
+        [(ngModel)]="todo.todo" placeholder="Todo" required>
+    </div>
+
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" name="completed"
+        [(ngModel)]="todo.completed"
+        #completedCtrl="ngModel" >
+      <label class="form-check-label" for="flexCheckDefault">
+        Completed
+      </label>
+    </div>
+
+    <div class="form-group float-right">
+     <button type="submit" class="btn btn-success" [disabled]="!todoForm.valid">
+        <i class="bi bi-plus"></i>Update todo</button>
+     </div>
+  </form>
+</div>

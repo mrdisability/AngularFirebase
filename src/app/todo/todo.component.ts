@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Todo } from '../models/todo.model';
+import { TodoService } from '../todo.service';
+import { serverTimestamp } from 'firebase/firestore';
 
 @Component({
   selector: 'app-todo',
@@ -7,9 +11,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TodoComponent implements OnInit {
 
-  constructor() { }
+  todo = ""
 
-  ngOnInit(): void {
+  constructor(private todoService: TodoService) { }
+
+  ngOnInit() {
+  }
+
+  onSubmit(form: NgForm) {
+    this.todoService.addTodo(form.controls['todo'].value).
+      then(() => form.reset());
   }
 
 }

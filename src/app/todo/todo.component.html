@@ -1,1 +1,18 @@
-<p>todo works!</p>
+<div>
+  <h4>Add new todo record</h4>
+  <form #todoForm="ngForm" (ngSubmit)="onSubmit(todoForm)">
+
+    <div class="form-group">
+       <label>Todo</label>
+       <input class="form-control" name="todo" #name="ngModel"
+        [(ngModel)]="todo" placeholder="Todo" required>
+    </div>
+
+        <div class="form-group float-right">
+           <button type="submit" class="btn btn-success"
+             [disabled]="!todoForm.valid" [disabled]="todoForm.invalid">
+              <i class="bi bi-plus"></i>Add todo</button>
+        </div>
+
+    </form>
+</div>

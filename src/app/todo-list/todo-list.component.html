@@ -1,9 +1,25 @@
-<div class="container">
-
-  <ul class="list-group" *ngFor="let todo of todos">
-    <li class="list-group-item">
-      {{todo.todo}}
-    </li>
-  </ul>
-
-</div>
+<table class="table table-striped">
+  <thead>
+   <tr>
+     <th scope="col">#</th>
+     <th scope="col">Todo</th>
+     <th scope="col">Completed</th>
+     <th scope="col">Edit</th>
+     <th scope="col">Delete</th>
+   </tr>
+  </thead>
+  <tbody *ngIf="todos">
+    <tr *ngFor="let todo of todos; index as i">
+      <th scope="row">{{ i+1 }}</th>
+      <td>{{ todo.todo }}</td>
+      <td>{{ todo.completed }}</td>
+      <td>
+        <i class="bi bi-pencil-square" style="color: green; cursor: pointer;"
+           (click)="editModal(todo)"></i>
+      </td>
+      <td>
+        <i class="bi bi-trash" (click)="deleteTodo(todo)" style="color: red; cursor: pointer;"></i>
+      </td>
+    </tr>
+   </tbody>
+</table>
