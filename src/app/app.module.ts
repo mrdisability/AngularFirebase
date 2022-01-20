@@ -9,12 +9,14 @@ import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 import { TodoComponent } from './todo/todo.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TodoComponent,
-    TodoListComponent
+    TodoListComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

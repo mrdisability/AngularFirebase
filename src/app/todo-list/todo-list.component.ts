@@ -10,20 +10,24 @@ import { TodoService } from '../todo.service';
 })
 export class TodoListComponent implements OnInit {
 
-  todos: Todo[] | undefined;
-  todoSubscription: Subscription | any;
-
-  constructor(private todoService: TodoService) {}
-
-  ngOnInit() {
-    this.todoSubscription = this.todoService.todosChanged.subscribe(
-      todos => (this.todos = todos)
-    );
-    this.todoService.fetchTodos();
-  }
-
-  ngOnDestroy() {
-    this.todoSubscription.unsubscribe();
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
   }
 
 }
+
+// todos: Todo[] | undefined;
+//   todoSubscription: Subscription | any;
+
+//   constructor(private todoService: TodoService) {}
+
+//   ngOnInit() {
+//     this.todoSubscription = this.todoService.todosChanged.subscribe(
+//       todos => (this.todos = todos)
+//     );
+//     this.todoService.fetchTodos();
+//   }
+
+//   ngOnDestroy() {
+//     this.todoSubscription.unsubscribe();
+//   }
